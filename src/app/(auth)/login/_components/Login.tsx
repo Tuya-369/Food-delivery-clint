@@ -2,11 +2,11 @@
 
 import { FooterButtons } from "@/components/auth";
 import { DynamicCardHeader } from "@/components/card";
-import { FormInput } from "@/components/dynamic-inputs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { LoginFooter } from "./LoginFooter";
+import { FormInput } from "@/components/dynamic-inputs";
 
 export const Login = () => {
   const { push } = useRouter();
