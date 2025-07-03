@@ -13,12 +13,12 @@ type FoodCardProps = {
   price: number;
   ingredients: string;
   image: string;
-  _id: string;
+  
 };
 
 export const FoodCard = ({
   foodName,
-
+price,
   ingredients,
   image,
 }: FoodCardProps) => {

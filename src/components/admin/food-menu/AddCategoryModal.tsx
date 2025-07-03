@@ -16,8 +16,18 @@ export const AddCategoryModal = () => {
   const [categoryName, setCategoryName] = useState<string>("");
 
   const createCategoryName = async () => {
-    setCategoryName("");
-  };
+    try {
+    const response = await fetch("http://localhost:3001/food-category", {
+      method: "POST",
+      body: JSON.stringify({ categoryName:"aa" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });    
+  }catch (error) {
+    console.error("Error:", error);
+  }
+};
 
   return (
     <Dialog>
