@@ -36,6 +36,7 @@ export const FoodDetailModal = ({
   };
 
   const handleAddToCart = () => {
+    
     setQuantity(1);
     onToggleModal();
   };
