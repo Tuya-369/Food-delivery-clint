@@ -1,10 +1,14 @@
 import { SidebarDashLine } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { FoodCartContext } from "@/providers/FoodCard";
 
 import { CircleX, Minus, Plus } from "lucide-react";
 import Image from "next/image";
+import { useContext } from "react";
 
 export const OrderSheetFoodItem = ({ food, quantity }) => {
+    const foodCart = useContext(FoodCartContext);
+
   return (
     <>
       <div className="flex gap-3">

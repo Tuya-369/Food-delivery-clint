@@ -10,7 +10,7 @@ export const FoodsWithCategories = () => {
   useEffect(()=>{
     const getCategories = async ()=>{
     const response = await fetch("http://localhost:3001/food") ;
-
+ 
     const data = await response.json();
 
     setfoodWithCategories(data.foodWithCategories)
@@ -34,7 +34,7 @@ export const FoodsWithCategories = () => {
           <p className="text-3xl font-semibold text-white">
             {category.categoryName}
           </p>
-          
+              
           <div className="grid grid-cols-1 mb-5 gap-9 sm:grid-cols-2 lg:grid-cols-3">
             {category?.foods?.map((food) => (
              <FoodCard

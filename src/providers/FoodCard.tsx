@@ -1,9 +1,10 @@
 "use client"
-import { FoodCartContextType, FoodType } from "@/constants/food";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { FoodCard } from "@/components/food";
+import { FoodCartContextType, FoodType } from "@/constants/Type";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { createContext } from "react";
 type FoodCardContextType = {
-    foodCart:{ food: FoodType; quantity:number }[];
+    FoodCard:{ food: FoodType; quantity:number }[];
     setFoodCart:Dispatch<SetStateAction<{food:FoodType;quantity:number}[]>>
 }
 export const FoodCartContext =  createContext<FoodCardContextType>(
@@ -15,7 +16,17 @@ export default function FoodCardContextProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [foodCart, setFoodCart] = useState<{food:FoodType, quantity:number}[]>([]);
+
+const [foodCart, setFoodCart] = useState<{food:FoodType, quantity:number}[]>([]);
+
+useEffect(() => {
+    const cartItem = localStorage.getItem("foodCart");
+    if (cartItem) {setFoodCart(JSON.parse(cartItem) || [])};
+},[]);
+   useEffect(() => {
+
+    if (foodCart)localStorage.setItem("foodCart", JSON.stringify(foodCart));
+}, [foodCart]); 
 
     return (
         <FoodCartContext.Provider value={{ foodCart, setFoodCart }}>

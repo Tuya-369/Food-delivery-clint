@@ -11,10 +11,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { FoodType } from "@/constants/Type";
+import { FoodCartContext } from "@/providers/FoodCard";
 
 type FoodDetailModalProps = {
-  food: never;
+  food: FoodType;
   isModalOpen: boolean;
   onToggleModal: () => void;
 };
@@ -25,7 +27,11 @@ export const FoodDetailModal = ({
   onToggleModal,
 }: FoodDetailModalProps) => {
   const [quantity, setQuantity] = useState<number>(1);
-  const { foodName, image, ingredients, price } = food;
+
+  const foodCart = useContext(FoodCartContext);
+
+  const { setFoodCart } = foodCart;
+  const { foodName, price, image, ingredients } = food;
 
   const addQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -36,8 +42,26 @@ export const FoodDetailModal = ({
   };
 
   const handleAddToCart = () => {
-    
-    setQuantity(1);
+    setFoodCart([
+      {
+        food: {
+          foodName: foodName,
+          price: price,
+          image: image,
+          ingredients: ingredients,
+          _id: "",
+          category: {
+            _id: "",
+            categoryName: "",
+            createdAt: "",
+            updatedAt: "",
+          },
+          createdAt: "",
+          updatedAt: "",
+        },
+        quantity: quantity,
+      },
+    ]);
     onToggleModal();
   };
 
