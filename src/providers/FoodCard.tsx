@@ -1,36 +1,54 @@
-"use client"
-import { FoodCard } from "@/components/food";
-import { FoodCartContextType, FoodType } from "@/constants/Type";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { createContext } from "react";
-type FoodCardContextType = {
-    FoodCard:{ food: FoodType; quantity:number }[];
-    setFoodCart:Dispatch<SetStateAction<{food:FoodType;quantity:number}[]>>
-}
-export const FoodCartContext =  createContext<FoodCardContextType>(
-    {} as FoodCardContextType
+"use client";
+ import React from "react";
+ import { FoodType } from "@/lib/utils/types";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useState,
+  useEffect,
+} from "react";
+ 
+type FoodCartContextType = {
+  foodCart: {
+    foodName: string;
+    price: number;
+    quantity: number;
+  }[];
+  setFoodCart: Dispatch<
+    SetStateAction<
+      {
+        foodName: string;
+        price: number;
+        quantity: number;
+      }[]
+    >
+  >;
+};
+export const FoodCartContext = createContext<FoodCartContextType>(
+  {} as FoodCartContextType
 );
-
-export default function FoodCardContextProvider({
-    children,
+ 
+export default function FoodCartContextProvider({
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-
-const [foodCart, setFoodCart] = useState<{food:FoodType, quantity:number}[]>([]);
-
-useEffect(() => {
-    const cartItem = localStorage.getItem("foodCart");
-    if (cartItem) {setFoodCart(JSON.parse(cartItem) || [])};
-},[]);
-   useEffect(() => {
-
-    if (foodCart)localStorage.setItem("foodCart", JSON.stringify(foodCart));
-}, [foodCart]); 
-
-    return (
-        <FoodCartContext.Provider value={{ foodCart, setFoodCart }}>
-            {children}
-        </FoodCartContext.Provider>
-    );
+  const [foodCart, setFoodCart] = useState<
+    { foodName: string; price: number; quantity: number }[]
+  >([]);
+  useEffect(() => {
+    const cartItems = localStorage.getItem("foodCart");
+ 
+    if (cartItems) setFoodCart(JSON.parse(cartItems) || []);
+  }, []);
+ 
+  useEffect(() => {
+    if (foodCart) localStorage.setItem("foodCart", JSON.stringify(foodCart));
+  }, [foodCart]);
+  return (
+    <FoodCartContext.Provider value={{ foodCart, setFoodCart }}>
+      {children}
+    </FoodCartContext.Provider>
+  );
 }

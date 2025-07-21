@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import cors from "cors";
 import { FoodsWithCategories } from "./FoodsWithCategories";
+import { foodWithCategoryType } from "@/lib/utils/types";
 
 export const FoodCategories = () => {
-  const[categories, setCategories] = useState<foodWithCategory[]>([]);
+  const[categories, setCategories] = useState<foodWithCategoryType[]>([]);
   useEffect(() => {
     const getCategories = async () => { 
       const response = await fetch("http://localhost:3001/food-category")
@@ -18,7 +19,7 @@ export const FoodCategories = () => {
 },[]);
   if (!categories.foodCategories?.length)
     return <p className="text-white">No categories found</p>;
-console.log(categories?.foodCategories)
+
   return (
     <div>
       <div className="flex flex-col my-8 gap-9">

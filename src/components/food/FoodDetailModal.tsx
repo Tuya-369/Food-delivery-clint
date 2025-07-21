@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Plus, X, Minus } from "lucide-react";
 import Image from "next/legacy/image";
+import { FoodCartContext } from "@/providers/FoodCard";
 import {
   Dialog,
   DialogContent,
@@ -12,8 +13,7 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { useContext, useState } from "react";
-import { FoodType } from "@/constants/Type";
-import { FoodCartContext } from "@/providers/FoodCard";
+import { FoodType } from "@/lib/utils/types";
 
 type FoodDetailModalProps = {
   food: FoodType;
@@ -28,10 +28,11 @@ export const FoodDetailModal = ({
 }: FoodDetailModalProps) => {
   const [quantity, setQuantity] = useState<number>(1);
 
-  const foodCart = useContext(FoodCartContext);
+  // const foodCard = useContext(FoodCartContext);
 
-  const { setFoodCart } = foodCart;
-  const { foodName, price, image, ingredients } = food;
+  const { foodCart, setFoodCart } = useContext(FoodCartContext);
+
+  const { foodName, image, ingredients, price } = food;
 
   const addQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -43,25 +44,15 @@ export const FoodDetailModal = ({
 
   const handleAddToCart = () => {
     setFoodCart([
+      ...foodCart,
       {
-        food: {
-          foodName: foodName,
-          price: price,
-          image: image,
-          ingredients: ingredients,
-          _id: "",
-          category: {
-            _id: "",
-            categoryName: "",
-            createdAt: "",
-            updatedAt: "",
-          },
-          createdAt: "",
-          updatedAt: "",
-        },
+        price: price,
+        foodName: foodName,
         quantity: quantity,
+        food: food,
       },
     ]);
+    setQuantity(1);
     onToggleModal();
   };
 
