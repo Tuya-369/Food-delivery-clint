@@ -1,23 +1,23 @@
 "use client";
-
 import { FoodCard } from "@/components/food";
 import { foodWithCategoryType } from "@/lib/utils/types";
 import { useEffect, useState } from "react";
 
 export const FoodsWithCategories = () => {
-  const [foodWithCategories,setfoodWithCategories] = useState<foodWithCategoryType[]>([]);
+  const [foodWithCategories,setFoodWithCategories] = useState<foodWithCategoryType[]>([]);
   useEffect(()=>{
     const getCategories = async ()=>{
     const response = await fetch("http://localhost:3001/food") ;
  
     const data = await response.json();
 
-    setfoodWithCategories(data.foodWithCategories)
+setFoodWithCategories(data.FoodsWithCategories);
     };
     getCategories();
 
   },[])
-  console.log(foodWithCategories[0])
+console.log("foodWithCategories", foodWithCategories);
+
   if (!foodWithCategories?.length) return null;
 
   const nonEmptyCategories = foodWithCategories.filter(

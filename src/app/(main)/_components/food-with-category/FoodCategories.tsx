@@ -10,7 +10,7 @@ export const FoodCategories = () => {
     const getCategories = async () => { 
       const response = await fetch("http://localhost:3001/food-category")
       const data = await response.json();
-      // console.log("Categorydataa",data);
+      console.log("Categorydataa",data);
 
       setCategories(data)
       
